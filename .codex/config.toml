@@ -1,0 +1,4 @@
+[mcp_servers.laravel-boost]
+command = "php"
+args = ["artisan", "boost:mcp"]
+cwd = "/home/luke/dev/workspace/github.com/lucianoparintins/clinica-saas-plataforma"
