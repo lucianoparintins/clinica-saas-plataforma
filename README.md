@@ -7,11 +7,11 @@ A aplicação segue uma arquitetura de monólito modular, organizada por domíni
 ## Requisitos Funcionais
 ### Gestão de usuários
 
-O sistema deve permitir registro de usuários.
+- [x] O sistema deve permitir registro de usuários.
 
-O sistema deve permitir autenticação (login).
+- [x] O sistema deve permitir autenticação (login).
 
-O sistema deve permitir logout do usuário autenticado.
+- [x] O sistema deve permitir logout do usuário autenticado.
 
 ### Gestão de pacientes
 
@@ -61,7 +61,7 @@ O sistema deve permitir envio de notificações relacionadas a consultas.
 docker compose up -d
 
 # Seedar o banco de dados
-docker exec -it laravel-workspace php artisan db:seed
+docker exec -it clinica-saas-plataforma-app php artisan db:seed
 
 # Parar o container
 docker compose down
