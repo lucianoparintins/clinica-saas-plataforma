@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/InputError.vue';
-import users from '@/routes/users';
+import usersRoutes from '@/routes/users';
 import type { BreadcrumbItem, User } from '@/types';
 
 const props = defineProps<{
@@ -25,11 +25,11 @@ const isEditing = !!props.user;
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Usuários',
-        href: users.index.url(),
+        href: usersRoutes.index.url(),
     },
     {
         title: isEditing ? 'Editar Usuário' : 'Novo Usuário',
-        href: isEditing ? users.edit.url(props.user!.id) : users.create.url(),
+        href: isEditing ? usersRoutes.edit.url(props.user!.id) : usersRoutes.create.url(),
     },
 ];
 
@@ -42,11 +42,11 @@ const form = useForm({
 
 const submit = () => {
     if (isEditing) {
-        form.put(users.update.url(props.user!.id), {
+        form.put(usersRoutes.update.url(props.user!.id), {
             onFinish: () => form.reset('password', 'password_confirmation'),
         });
     } else {
-        form.post(users.store.url(), {
+        form.post(usersRoutes.store.url(), {
             onFinish: () => form.reset('password', 'password_confirmation'),
         });
     }
@@ -60,7 +60,7 @@ const submit = () => {
         <div class="flex h-full flex-1 flex-col gap-4 p-4">
             <div class="flex items-center gap-4">
                 <Button variant="ghost" size="icon-sm" as-child>
-                    <Link :href="users.index.url()">
+                    <Link :href="usersRoutes.index.url()">
                         <ArrowLeft class="h-4 w-4" />
                     </Link>
                 </Button>
@@ -131,7 +131,7 @@ const submit = () => {
 
                             <div class="flex justify-end gap-3 border-t pt-6">
                                 <Button type="button" variant="ghost" as-child>
-                                    <Link :href="users.index.url()">Cancelar</Link>
+                                    <Link :href="usersRoutes.index.url()">Cancelar</Link>
                                 </Button>
                                 <Button type="submit" :disabled="form.processing">
                                     <template v-if="form.processing">

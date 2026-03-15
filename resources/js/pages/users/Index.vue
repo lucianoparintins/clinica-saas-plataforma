@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
-import { Plus, Pencil, Trash2, User as UserIcon } from 'lucide-vue-next';
+import { Plus, Pencil, Trash2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
-import users from '@/routes/users';
+import usersRoutes from '@/routes/users';
 import type { BreadcrumbItem } from '@/types';
 
 type UserList = {
@@ -34,7 +34,7 @@ defineProps<{
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Usuários',
-        href: users.index.url(),
+        href: usersRoutes.index.url(),
     },
 ];
 
@@ -42,7 +42,7 @@ const { getInitials } = useInitials();
 
 const deleteUser = (user: UserList) => {
     if (confirm(`Tem certeza que deseja excluir o usuário ${user.name}?`)) {
-        router.delete(users.destroy.url(user.id));
+        router.delete(usersRoutes.destroy.url(user.id));
     }
 };
 </script>
@@ -55,7 +55,7 @@ const deleteUser = (user: UserList) => {
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold">Usuários</h1>
                 <Button as-child>
-                    <Link :href="users.create.url()">
+                    <Link :href="usersRoutes.create.url()">
                         <Plus class="mr-2 h-4 w-4" />
                         Novo Usuário
                     </Link>
@@ -94,7 +94,7 @@ const deleteUser = (user: UserList) => {
                                     <td class="p-4 align-middle text-right">
                                         <div class="flex justify-end gap-2">
                                             <Button variant="ghost" size="icon-sm" as-child>
-                                                <Link :href="users.edit.url(user.id)">
+                                                <Link :href="usersRoutes.edit.url(user.id)">
                                                     <Pencil class="h-4 w-4" />
                                                 </Link>
                                             </Button>
