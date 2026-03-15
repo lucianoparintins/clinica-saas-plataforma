@@ -9,15 +9,10 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
-import type { BreadcrumbItem, User } from '@/types';
+import users from '@/routes/users';
+import type { BreadcrumbItem } from '@/types';
 
 type UserList = {
     id: number;
@@ -39,7 +34,7 @@ defineProps<{
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Usuários',
-        href: route('users.index'),
+        href: users.index.url(),
     },
 ];
 
@@ -47,7 +42,7 @@ const { getInitials } = useInitials();
 
 const deleteUser = (user: UserList) => {
     if (confirm(`Tem certeza que deseja excluir o usuário ${user.name}?`)) {
-        router.delete(route('users.destroy', user.id));
+        router.delete(users.destroy.url(user.id));
     }
 };
 </script>
@@ -60,7 +55,7 @@ const deleteUser = (user: UserList) => {
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold">Usuários</h1>
                 <Button as-child>
-                    <Link :href="route('users.create')">
+                    <Link :href="users.create.url()">
                         <Plus class="mr-2 h-4 w-4" />
                         Novo Usuário
                     </Link>
@@ -99,7 +94,7 @@ const deleteUser = (user: UserList) => {
                                     <td class="p-4 align-middle text-right">
                                         <div class="flex justify-end gap-2">
                                             <Button variant="ghost" size="icon-sm" as-child>
-                                                <Link :href="route('users.edit', user.id)">
+                                                <Link :href="users.edit.url(user.id)">
                                                     <Pencil class="h-4 w-4" />
                                                 </Link>
                                             </Button>

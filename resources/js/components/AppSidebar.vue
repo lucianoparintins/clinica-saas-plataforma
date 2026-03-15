@@ -14,10 +14,12 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { computed } from 'vue';
 import { dashboard } from '@/routes';
+import { index as usersIndex } from '@/routes/users';
 import type { NavItem } from '@/types';
 
-const mainNavItems: NavItem[] = [
+const mainNavItems = computed<NavItem[]>(() => [
     {
         title: 'Dashboard',
         href: dashboard(),
@@ -25,10 +27,10 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Usuários',
-        href: route('users.index'),
+        href: usersIndex.url(),
         icon: Users,
     },
-];
+]);
 
 const footerNavItems: NavItem[] = [
     {
