@@ -52,3 +52,17 @@ O sistema deve impedir agendamentos duplicados no mesmo horário para o mesmo m�
 O sistema deve registrar eventos de criação ou cancelamento de consultas.
 
 O sistema deve permitir envio de notificações relacionadas a consultas.
+
+
+## Comandos
+
+```bash
+# Iniciar o container
+docker compose up -d
+
+# Seedar o banco de dados
+docker exec -it laravel-workspace php artisan db:seed
+
+# Parar o container
+docker compose down
+```
