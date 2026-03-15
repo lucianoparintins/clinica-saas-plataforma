@@ -1,0 +1,54 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER: ${USER:-developer}
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: clinica-saas-plataforma-app
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_CONNECTION=pgsql
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=laravel
+      - DB_USERNAME=root
+      - DB_PASSWORD=password
+      - PGPASSWORD=password
+    depends_on:
+      - db
+    entrypoint: [".docker/entrypoint.sh"]
+    networks:
+      - app-network
+
+  db:
+    image: postgres:17-alpine
+    container_name: clinica-saas-plataforma-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: laravel
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
