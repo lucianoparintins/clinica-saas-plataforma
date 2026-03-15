@@ -15,15 +15,15 @@ A aplicação segue uma arquitetura de monólito modular, organizada por domíni
 
 ### Gestão de pacientes
 
-O sistema deve permitir cadastrar pacientes.
+- [x] O sistema deve permitir cadastrar pacientes.
 
-O sistema deve permitir editar informações de pacientes.
+- [x] O sistema deve permitir editar informações de pacientes.
 
-O sistema deve permitir excluir pacientes.
+- [x] O sistema deve permitir excluir pacientes.
 
-O sistema deve permitir listar pacientes cadastrados.
+- [x] O sistema deve permitir listar pacientes cadastrados.
 
-O sistema deve permitir visualizar os dados de um paciente específico.
+- [x] O sistema deve permitir visualizar os dados de um paciente específico.
 
 ### Gestão de médicos
 
