@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\UserController;
@@ -15,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('patients', PatientController::class);
     Route::resource('doctors', DoctorController::class);
+    Route::resource('appointments', AppointmentController::class);
 });
 
 require __DIR__.'/settings.php';

@@ -19,13 +19,20 @@ import { dashboard } from '@/routes';
 import { index as usersIndex } from '@/routes/users';
 import { index as patientsIndex } from '@/routes/patients';
 import { index as doctorsIndex } from '@/routes/doctors';
+import { index as appointmentsIndex } from '@/routes/appointments';
 import type { NavItem } from '@/types';
+import { Calendar } from 'lucide-vue-next';
 
 const mainNavItems = computed<NavItem[]>(() => [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Agendamentos',
+        href: appointmentsIndex.url(),
+        icon: Calendar,
     },
     {
         title: 'Médicos',
