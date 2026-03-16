@@ -1,5 +1,18 @@
 <?php
 
+putenv('APP_ENV=testing');
+$_ENV['APP_ENV'] = 'testing';
+$_SERVER['APP_ENV'] = 'testing';
+
+putenv('DB_CONNECTION=sqlite');
+$_ENV['DB_CONNECTION'] = 'sqlite';
+$_SERVER['DB_CONNECTION'] = 'sqlite';
+
+putenv('DB_DATABASE=:memory:');
+$_ENV['DB_DATABASE'] = ':memory:';
+$_SERVER['DB_DATABASE'] = ':memory:';
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /*
@@ -14,7 +27,7 @@ use Tests\TestCase;
 */
 
 pest()->extend(TestCase::class)
-    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(RefreshDatabase::class)
     ->in('Feature');
 
 /*
