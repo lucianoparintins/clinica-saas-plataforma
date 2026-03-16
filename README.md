@@ -27,13 +27,13 @@ A aplicação segue uma arquitetura de monólito modular, organizada por domíni
 
 ### Gestão de médicos
 
-O sistema deve permitir cadastrar médicos.
+- [x] O sistema deve permitir cadastrar médicos.
 
-O sistema deve permitir editar informações de médicos.
+- [x] O sistema deve permitir editar informações de médicos.
 
-O sistema deve permitir listar médicos cadastrados.
+- [x] O sistema deve permitir listar médicos cadastrados.
 
-O sistema deve permitir visualizar dados de um médico específico.
+- [x] O sistema deve permitir visualizar dados de um médico específico.
 
 ### Agendamento de consultas
 
