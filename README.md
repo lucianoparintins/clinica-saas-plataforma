@@ -37,15 +37,15 @@ A aplicação segue uma arquitetura de monólito modular, organizada por domíni
 
 ### Agendamento de consultas
 
-O sistema deve permitir agendar consultas entre pacientes e médicos.
+- [x] O sistema deve permitir agendar consultas entre pacientes e médicos.
 
-O sistema deve permitir listar consultas agendadas.
+- [x] O sistema deve permitir listar consultas agendadas.
 
-O sistema deve permitir cancelar consultas.
+- [x] O sistema deve permitir cancelar consultas.
 
-O sistema deve permitir visualizar a agenda de um médico.
+- [x] O sistema deve permitir visualizar a agenda de um médico.
 
-O sistema deve impedir agendamentos duplicados no mesmo horário para o mesmo médico.
+- [x] O sistema deve impedir agendamentos duplicados no mesmo horário para o mesmo médico.
 
 ### Notificações
 
