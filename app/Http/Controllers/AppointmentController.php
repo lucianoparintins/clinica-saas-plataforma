@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -39,9 +40,17 @@ class AppointmentController extends Controller
      */
     public function create(): Response
     {
+        $doctors = Cache::remember('doctors_list', 86400, function () {
+            return Doctor::all(['id', 'name']);
+        });
+
+        $patients = Cache::remember('patients_list', 86400, function () {
+            return Patient::all(['id', 'name']);
+        });
+
         return Inertia::render('appointments/Edit', [
-            'doctors' => Doctor::all(['id', 'name']),
-            'patients' => Patient::all(['id', 'name']),
+            'doctors' => $doctors,
+            'patients' => $patients,
         ]);
     }
 
@@ -51,6 +60,8 @@ class AppointmentController extends Controller
     public function store(StoreAppointmentRequest $request): RedirectResponse
     {
         Auth::user()->appointments()->create($request->validated());
+
+        Cache::forget('dashboard_stats');
 
         return to_route('appointments.index')->with('status', 'Consulta agendada com sucesso!');
     }
@@ -81,10 +92,18 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment): Response
     {
+        $doctors = Cache::remember('doctors_list', 86400, function () {
+            return Doctor::all(['id', 'name']);
+        });
+
+        $patients = Cache::remember('patients_list', 86400, function () {
+            return Patient::all(['id', 'name']);
+        });
+
         return Inertia::render('appointments/Edit', [
             'appointment' => $appointment,
-            'doctors' => Doctor::all(['id', 'name']),
-            'patients' => Patient::all(['id', 'name']),
+            'doctors' => $doctors,
+            'patients' => $patients,
         ]);
     }
 
@@ -95,6 +114,8 @@ class AppointmentController extends Controller
     {
         $appointment->update($request->validated());
 
+        Cache::forget('dashboard_stats');
+
         return to_route('appointments.index')->with('status', 'Consulta atualizada com sucesso!');
     }
 
@@ -104,6 +125,8 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment): RedirectResponse
     {
         $appointment->delete();
+
+        Cache::forget('dashboard_stats');
 
         return to_route('appointments.index')->with('status', 'Agendamento removido com sucesso!');
     }

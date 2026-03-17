@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -44,15 +45,19 @@ class DashboardController extends Controller
                 'scheduled_at' => $activity->scheduled_at->format('d/m/Y'),
             ]);
 
-        return Inertia::render('Dashboard', [
-            'appointmentsOfWeek' => $appointmentsOfWeek,
-            'recentActivities' => $recentActivities,
-            'stats' => [
+        $stats = Cache::remember('dashboard_stats', 1800, function () {
+            return [
                 'total_appointments' => Appointment::count(),
                 'pending_appointments' => Appointment::where('status', 'pending')->count(),
                 'confirmed_appointments' => Appointment::where('status', 'confirmed')->count(),
                 'cancelled_appointments' => Appointment::where('status', 'cancelled')->count(),
-            ],
+            ];
+        });
+
+        return Inertia::render('Dashboard', [
+            'appointmentsOfWeek' => $appointmentsOfWeek,
+            'recentActivities' => $recentActivities,
+            'stats' => $stats,
         ]);
     }
 }

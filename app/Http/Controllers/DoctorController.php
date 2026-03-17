@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -47,6 +48,8 @@ class DoctorController extends Controller
     {
         Doctor::create($request->validated());
 
+        Cache::forget('doctors_list');
+
         return to_route('doctors.index')->with('status', 'Médico cadastrado com sucesso!');
     }
 
@@ -86,6 +89,8 @@ class DoctorController extends Controller
     {
         $doctor->update($request->validated());
 
+        Cache::forget('doctors_list');
+
         return to_route('doctors.index')->with('status', 'Médico atualizado com sucesso!');
     }
 
@@ -95,6 +100,8 @@ class DoctorController extends Controller
     public function destroy(Doctor $doctor): RedirectResponse
     {
         $doctor->delete();
+
+        Cache::forget('doctors_list');
 
         return to_route('doctors.index')->with('status', 'Médico excluído com sucesso!');
     }

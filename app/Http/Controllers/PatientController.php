@@ -6,6 +6,7 @@ use App\Http\Requests\PatientStoreRequest;
 use App\Http\Requests\PatientUpdateRequest;
 use App\Models\Patient;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -46,6 +47,8 @@ class PatientController extends Controller
     {
         Patient::create($request->validated());
 
+        Cache::forget('patients_list');
+
         return to_route('patients.index')->with('status', 'Paciente cadastrado com sucesso!');
     }
 
@@ -85,6 +88,8 @@ class PatientController extends Controller
     {
         $patient->update($request->validated());
 
+        Cache::forget('patients_list');
+
         return to_route('patients.index')->with('status', 'Paciente atualizado com sucesso!');
     }
 
@@ -94,6 +99,8 @@ class PatientController extends Controller
     public function destroy(Patient $patient): RedirectResponse
     {
         $patient->delete();
+
+        Cache::forget('patients_list');
 
         return to_route('patients.index')->with('status', 'Paciente excluído com sucesso!');
     }
