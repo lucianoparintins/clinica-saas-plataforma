@@ -4,6 +4,7 @@ use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\User;
+use App\Notifications\AppointmentCanceledNotification;
 use App\Notifications\AppointmentScheduledNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Notification;
@@ -33,6 +34,31 @@ test('it notifies the patient when an appointment is scheduled', function () {
     Notification::assertSentTo(
         $patient,
         AppointmentScheduledNotification::class,
+        function ($notification) use ($appointment) {
+            return $notification->appointment->id === $appointment->id;
+        }
+    );
+});
+
+test('it notifies the patient when an appointment is canceled', function () {
+    Notification::fake();
+
+    $user = User::factory()->create();
+    $doctor = Doctor::factory()->create();
+    $patient = Patient::factory()->create();
+    $appointment = Appointment::factory()->create([
+        'doctor_id' => $doctor->id,
+        'patient_id' => $patient->id,
+    ]);
+
+    $response = $this->actingAs($user)
+        ->delete(route('appointments.destroy', $appointment));
+
+    $response->assertRedirect(route('appointments.index'));
+
+    Notification::assertSentTo(
+        $patient,
+        AppointmentCanceledNotification::class,
         function ($notification) use ($appointment) {
             return $notification->appointment->id === $appointment->id;
         }

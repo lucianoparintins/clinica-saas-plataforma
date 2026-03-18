@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Notifications\AppointmentCanceledNotification;
 use App\Notifications\AppointmentScheduledNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -127,6 +128,8 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment): RedirectResponse
     {
+        $appointment->patient->notify(new AppointmentCanceledNotification($appointment));
+
         $appointment->delete();
 
         Cache::forget('dashboard_stats');

@@ -49,9 +49,9 @@ A aplicação segue uma arquitetura de monólito modular, organizada por domíni
 
 ### Notificações
 
-O sistema deve registrar eventos de criação ou cancelamento de consultas.
+- [x] O sistema deve registrar eventos de criação ou cancelamento de consultas.
 
-O sistema deve permitir envio de notificações relacionadas a consultas.
+- [x] O sistema deve permitir envio de notificações relacionadas a consultas.
 
 
 ## Comandos
