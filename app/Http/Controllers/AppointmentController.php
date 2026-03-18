@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Notifications\AppointmentScheduledNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -59,7 +60,9 @@ class AppointmentController extends Controller
      */
     public function store(StoreAppointmentRequest $request): RedirectResponse
     {
-        Auth::user()->appointments()->create($request->validated());
+        $appointment = Auth::user()->appointments()->create($request->validated());
+
+        $appointment->patient->notify(new AppointmentScheduledNotification($appointment));
 
         Cache::forget('dashboard_stats');
 
