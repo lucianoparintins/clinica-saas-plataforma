@@ -57,6 +57,9 @@ A aplicação segue uma arquitetura de monólito modular, organizada por domíni
 ## Comandos
 
 ```bash
+# Copiar arquivo de ambiente
+cp .env.example .env
+
 # Iniciar o container
 docker compose up -d
 
